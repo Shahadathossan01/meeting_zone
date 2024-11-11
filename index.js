@@ -36,8 +36,8 @@ app.post('/register',async(req,res,next)=>{
     password
   })
  
-  const salt=bcrypt.genSaltSync(10)
-  const hash=bcrypt.hashSync(password,salt)
+  const salt=await bcrypt.genSalt(10)
+  const hash=await bcrypt.hash(password,salt)
   user.password=hash
 
   await user.save()
