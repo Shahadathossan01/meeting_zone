@@ -78,7 +78,7 @@ app.post('/login',async(req,res)=>{
 })
 
 app.get('/user',async(req,res,next)=>{
-  const user=await User.find()
+  const user = await User.find().limit(20).select("username email");
   return res.status(200).json(user)
 })
 
