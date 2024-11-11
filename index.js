@@ -77,6 +77,11 @@ app.post('/login',async(req,res)=>{
   }
 })
 
+app.get('/user',async(req,res,next)=>{
+  const user=await User.find()
+  return res.status(200).json(user)
+})
+
 app.get('/private',authenticate,async(req,res)=>{
   return res.status(200).json({message:'I am a private route'})
 })
