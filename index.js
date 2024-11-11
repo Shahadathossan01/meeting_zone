@@ -20,7 +20,7 @@ app.get('/heathCheck', (req, res) => {
 
 app.post('/register',async(req,res,next)=>{
   const {username,email,password}=req.body
-
+  console.log('enter')
   if(!username || !email || !password){
     return res.status(400).json({message:"Invalid Data"})
   }
