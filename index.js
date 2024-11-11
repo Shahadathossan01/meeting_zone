@@ -37,9 +37,8 @@ app.post('/register',async(req,res,next)=>{
   })
  
   const salt=await bcrypt.genSalt(10)
-  const hash=await bcrypt.hash(password,salt)
-  user.password=hash
-
+  user.password=await bcrypt.hash(password,salt)
+ 
   await user.save()
   return res.status(201).json({message:"User Created Successfully",user})
   }catch(error){
