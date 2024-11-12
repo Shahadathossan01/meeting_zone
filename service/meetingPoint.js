@@ -20,4 +20,19 @@ const meetingPointDeleteService=async(id)=>{
     const deleteMeetingPoint=await MeetingPoint.findByIdAndDelete(id)
     return deleteMeetingPoint
 }
-module.exports={meetingPointCreateService,meetingPointReadService,meetingPointDeleteService}
+
+const meetingPointUpdateService=async(id,name,location,environtmentFootage,details)=>{
+    const updatedMeetingPoint=await MeetingPoint.findByIdAndUpdate(id,{
+        $set:{
+          name:name,
+          location:location,
+          environtmentFootage:environtmentFootage,
+          details:details
+        }
+      },{new:true})
+
+      return updatedMeetingPoint
+}
+
+
+module.exports={meetingPointCreateService,meetingPointReadService,meetingPointDeleteService,meetingPointUpdateService}
