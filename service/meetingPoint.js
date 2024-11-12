@@ -11,4 +11,8 @@ const meetingPointCreateService=async(name,location,environtmentFootage,details)
       return meetingPoint
 }
 
-module.exports={meetingPointCreateService}
+const meetingPointReadService=async()=>{
+    const meetingPoint=await MeetingPoint.find()
+    return meetingPoint;
+}
+module.exports={meetingPointCreateService,meetingPointReadService}

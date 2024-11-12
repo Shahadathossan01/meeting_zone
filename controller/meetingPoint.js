@@ -1,5 +1,5 @@
 const MeetingPoint = require("../Models/meeting_point");
-const { meetingPointCreateService } = require("../service/meetingPoint");
+const { meetingPointCreateService, meetingPointReadService } = require("../service/meetingPoint");
 const error = require("../utils/error");
 
 const meetingPointCreateController=async(req,res,next)=>{
@@ -16,4 +16,13 @@ const meetingPointCreateController=async(req,res,next)=>{
     }
   }
 
-module.exports={meetingPointCreateController}
+const meetingPointReadController=async(req,res,next)=>{
+    try{
+        const meetingPoint=await meetingPointReadService()
+        res.status(200).json(meetingPoint)
+    }catch(error){
+        next(error)
+    }
+  }
+
+module.exports={meetingPointCreateController,meetingPointReadController}
