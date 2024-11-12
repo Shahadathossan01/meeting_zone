@@ -9,7 +9,8 @@ const User = require('./Models/User')
 const authenticate = require('./middleware/authenticate')
 const { registerController, loginController } = require('./controller/auth')
 const MeetingPoint = require('./Models/meeting_point')
-const {meetingPointCreateController, meetingPointReadController } = require('./controller/meetingPoint')
+const {meetingPointCreateController, meetingPointReadController, meetingPointDeleteController } = require('./controller/meetingPoint')
+const error = require('./utils/error')
 app.use(cors())
 app.use(express.json())
 
@@ -24,6 +25,7 @@ app.post('/login',loginController)
 
 app.post('/meetingPoint',meetingPointCreateController)
 app.get('/meetingPoint',meetingPointReadController)
+app.delete('/meetingPoint/:id',meetingPointDeleteController)
 
 app.get('/private',authenticate,async(req,res)=>{
   return res.status(200).json({message:'I am a private route'})

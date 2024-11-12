@@ -1,5 +1,5 @@
 const MeetingPoint = require("../Models/meeting_point");
-const { meetingPointCreateService, meetingPointReadService } = require("../service/meetingPoint");
+const { meetingPointCreateService, meetingPointReadService, meetingPointDeleteService } = require("../service/meetingPoint");
 const error = require("../utils/error");
 
 const meetingPointCreateController=async(req,res,next)=>{
@@ -25,4 +25,17 @@ const meetingPointReadController=async(req,res,next)=>{
     }
   }
 
-module.exports={meetingPointCreateController,meetingPointReadController}
+const meetingPointDeleteController=async(req,res,next)=>{
+    const {id}=req.params;
+    try{
+      const deleteMeetingPoint=await meetingPointDeleteService(id)
+      if(!deleteMeetingPoint){
+        throw error('This data not found',400)
+      }
+      res.status(200).json({message:'Delete Successfully'})
+    }catch(error){
+      next(error)
+    }
+  }
+
+module.exports={meetingPointCreateController,meetingPointReadController,meetingPointDeleteController}

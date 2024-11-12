@@ -15,4 +15,9 @@ const meetingPointReadService=async()=>{
     const meetingPoint=await MeetingPoint.find()
     return meetingPoint;
 }
-module.exports={meetingPointCreateService,meetingPointReadService}
+
+const meetingPointDeleteService=async(id)=>{
+    const deleteMeetingPoint=await MeetingPoint.findByIdAndDelete(id)
+    return deleteMeetingPoint
+}
+module.exports={meetingPointCreateService,meetingPointReadService,meetingPointDeleteService}
