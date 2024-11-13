@@ -27,4 +27,14 @@ const bookingListDeleteController=async(req,res,next)=>{
       next(error)
     }
   }
-module.exports={bookingListCreateController,bookingListDeleteController}
+const userBookingController=async(req,res,next)=>{
+    const {userId}=req.params
+    try{
+      const bookings=await BookingList.find({userId})
+      res.status(200).json(bookings)
+    }catch(err){
+      next(error)
+    }
+  }
+
+module.exports={bookingListCreateController,bookingListDeleteController,userBookingController}
