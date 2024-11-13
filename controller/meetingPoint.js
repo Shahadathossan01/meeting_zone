@@ -51,4 +51,17 @@ const meetingPointUpdateController=async(req,res,next)=>{
         next(error)
     }
   }
-module.exports={meetingPointCreateController,meetingPointReadController,meetingPointDeleteController,meetingPointUpdateController}
+const meetingPointByIdController=async(req,res,next)=>{
+  const {id}=req.params;
+  try{
+    const meetingPoint=await MeetingPoint.findById(id)
+    if(!meetingPoint){
+      throw error('Not found meeting point',400)
+    }
+    res.status(200).json(meetingPoint)
+  }catch(err){
+    next(error)
+  }
+}
+
+module.exports={meetingPointCreateController,meetingPointReadController,meetingPointDeleteController,meetingPointUpdateController,meetingPointByIdController}
