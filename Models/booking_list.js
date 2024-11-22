@@ -1,15 +1,14 @@
 const mongoose=require('mongoose');
 const {Schema,model}=mongoose;
-
 const bookingListSchema=new Schema({
-    name:String,
-    location:String,
+    username:String,
     meetupType:String,
     date:String,
     shift:String,
-    capacity:Number,
-    cost:Number,
-    overallCost:Number,
+    members:Number,
+    duration:Number,
+    itemLocation:String,
+    status:String,
     userId:{
         type:Schema.Types.ObjectId,
         ref:'User'

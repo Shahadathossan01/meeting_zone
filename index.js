@@ -21,6 +21,7 @@ const store_id = 'meetu674077e4148f5'
 const store_passwd = 'meetu674077e4148f5@ssl'
 const is_live = false //true for live, false for sandbox
 const { v4: uuidv4 } = require('uuid');
+const { bookingListCreateService } = require('./service/bookingList')
 
 app.get('/heathCheck', (req, res) => {
   res.send('Api health is good!!!')
@@ -36,13 +37,23 @@ app.delete('/meetingPoint/:id',meetingPointDeleteController)
 app.patch('/meetingPoint/:id',meetingPointUpdateController)
 app.get('/meetingPointById/:id',meetingPointByIdController)
 
-app.post('/bookingList/:userId',bookingListCreateController)
+app.post('/bookingList',bookingListCreateController)
 app.delete('/bookingList/:id',bookingListDeleteController)
 
 app.get('/userBooking/:userId',userBookingController)
 
 app.post('/initiate-payment',async(req,res)=>{
-  const {username,meetupType,date,shift,members,duration,itemLocation}=req.body
+  const {username,meetupType,date,shift,members,duration,itemLocation,status,userId}=req.body
+
+  try{
+    const bookingList=await bookingListCreateService(username,meetupType,date,shift,members,duration,itemLocation,status,userId)
+    if(!bookingList){
+        throw error('Not create new booking list',400)
+    }
+  }catch(err){
+    next(error)
+}
+
   const data = {
     total_amount: duration*1000,
     currency: 'BDT',
@@ -81,22 +92,29 @@ sslcz.init(data).then(apiResponse => {
     // res.redirect(GatewayPageURL)
     // console.log('Redirecting to: ', GatewayPageURL)
 });
-})
-
-app.post('/success',async(req,res)=>{
-  //TODO
-  console.log('success page')
+app.post('/success',async(req,res,next)=>{
+  try{
+    //TODO
+    res.redirect('http://localhost:5173/success')
+  }catch(err){
+    next(error)
+}
 })
 
 app.post('/fail',async(req,res)=>{
   //TODO
-  console.log('fail page')
+  res.redirect('http://localhost:5173/fail')
 })
 
 app.post('/cancel',async(req,res)=>{
   //TODO
-  console.log('cancel page')
+  res.redirect('http://localhost:5173/cancel')
 })
+
+})
+
+
+
 
 app.get('/private',authenticate,async(req,res)=>{
   return res.status(200).json({message:'I am a private route'})

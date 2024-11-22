@@ -3,10 +3,9 @@ const { bookingListCreateService } = require("../service/bookingList")
 const error = require("../utils/error")
 
 const bookingListCreateController=async(req,res,next)=>{
-    const userId=req.params.userId
-    const {name,location,meetupType,date,shift,capacity,cost,overallCost}=req.body
+    const {username,meetupType,date,shift,members,duration,itemLocation,status,userId}=req.body
     try{
-        const bookingList=await bookingListCreateService(name,location,meetupType,date,shift,capacity,cost,overallCost,userId)
+        const bookingList=await bookingListCreateService(username,meetupType,date,shift,members,duration,itemLocation,status,userId)
         if(!bookingList){
             throw error('Not create new booking list',400)
         }

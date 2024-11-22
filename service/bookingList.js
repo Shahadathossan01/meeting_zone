@@ -1,15 +1,15 @@
 const BookingList = require("../Models/booking_list")
 
-const bookingListCreateService=async(name,location,meetupType,date,shift,capacity,cost,overallCost,userId)=>{
+const bookingListCreateService=async(username,meetupType,date,shift,members,duration,itemLocation,status,userId)=>{
     const bookingList=new BookingList({
-        name,
-        location,
+        username,
         meetupType,
         date,
         shift,
-        capacity,
-        cost,
-        overallCost,
+        members,
+        duration,
+        itemLocation,
+        status,
         userId
       })
       await bookingList.save()
