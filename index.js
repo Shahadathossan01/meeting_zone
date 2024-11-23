@@ -44,16 +44,17 @@ app.get('/userBooking/:userId',userBookingController)
 
 app.post('/initiate-payment',async(req,res)=>{
   const {username,meetupType,date,shift,members,duration,itemLocation,status,userId}=req.body
-
+  let zoneId=null
   try{
     const bookingList=await bookingListCreateService(username,meetupType,date,shift,members,duration,itemLocation,status,userId)
     if(!bookingList){
         throw error('Not create new booking list',400)
     }
+    zoneId=bookingList._id
   }catch(err){
     next(error)
 }
-
+console.log('zoneid',zoneId)
   const data = {
     total_amount: duration*1000,
     currency: 'BDT',
@@ -94,7 +95,9 @@ sslcz.init(data).then(apiResponse => {
 });
 app.post('/success',async(req,res,next)=>{
   try{
-    //TODO
+    const updatedBookingList=await BookingList.findByIdAndUpdate(zoneId,{$set:{
+      status:'payed'
+    }})
     res.redirect('http://localhost:5173/success')
   }catch(err){
     next(error)
@@ -102,12 +105,11 @@ app.post('/success',async(req,res,next)=>{
 })
 
 app.post('/fail',async(req,res)=>{
-  //TODO
+  const deletedBookingList=await BookingList.findByIdAndDelete(zoneId)
   res.redirect('http://localhost:5173/fail')
 })
-
 app.post('/cancel',async(req,res)=>{
-  //TODO
+  const deletedBookingList=await BookingList.findByIdAndDelete(zoneId)
   res.redirect('http://localhost:5173/cancel')
 })
 
