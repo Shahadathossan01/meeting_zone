@@ -1,11 +1,14 @@
 const MeetingPoint = require("../Models/meeting_point")
 
-const meetingPointCreateService=async(name,location,environtmentFootage,details)=>{
+const meetingPointCreateService=async(name,location,details,mapUrl,img1,img2,img3)=>{
     const meetingPoint=new MeetingPoint({
         name,
         location,
-        environtmentFootage,
-        details
+        details,
+        mapUrl,
+        img1,
+        img2,
+        img3
       })
       await meetingPoint.save()
       return meetingPoint
@@ -21,13 +24,16 @@ const meetingPointDeleteService=async(id)=>{
     return deleteMeetingPoint
 }
 
-const meetingPointUpdateService=async(id,name,location,environtmentFootage,details)=>{
+const meetingPointUpdateService=async(id,name,location,details,mapUrl,img1,img2,img3)=>{
     const updatedMeetingPoint=await MeetingPoint.findByIdAndUpdate(id,{
         $set:{
           name:name,
           location:location,
-          environtmentFootage:environtmentFootage,
-          details:details
+          details:details,
+          mapUrl:mapUrl,
+          img1:img1,
+          img2:img2,
+          img3:img3
         }
       },{new:true})
 

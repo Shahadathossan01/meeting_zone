@@ -3,12 +3,12 @@ const { meetingPointCreateService, meetingPointReadService, meetingPointDeleteSe
 const error = require("../utils/error");
 
 const meetingPointCreateController=async(req,res,next)=>{
-    const {name,location,environtmentFootage,details}=req.body;
-    if(!name || !location || !environtmentFootage || !details){
+    const {name,location,details,mapUrl,img1,img2,img3}=req.body;
+    if(!name || !location || !details || !mapUrl || !img1 || !img2 || !img3){
         throw error('Invalid Data',400)
     }
     try{
-        const meetingPoint=await meetingPointCreateService(name,location,environtmentFootage,details)
+        const meetingPoint=await meetingPointCreateService(name,location,details,mapUrl,img1,img2,img3)
       
         res.status(200).json(meetingPoint)
     }catch(error){
@@ -40,9 +40,9 @@ const meetingPointDeleteController=async(req,res,next)=>{
 
 const meetingPointUpdateController=async(req,res,next)=>{
     const {id}=req.params;
-    const {name,location,environtmentFootage,details}=req.body
+    const {name,location,details,mapUrl,img1,img2,img3}=req.body
     try{
-        const updatedMeetingPoint=await meetingPointUpdateService(id,name,location,environtmentFootage,details)
+        const updatedMeetingPoint=await meetingPointUpdateService(id,name,location,details,mapUrl,img1,img2,img2)
         if(!updatedMeetingPoint){
             throw error('Data not found',400)
         }

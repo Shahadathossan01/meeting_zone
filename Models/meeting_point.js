@@ -4,8 +4,11 @@ const {Schema,model}=mongoose;
 const meetingPointSchema=new Schema({
     name:String,
     location:String,
-    environtmentFootage:[String],
-    details:String
+    details:String,
+    mapUrl:String,
+    img1:String,
+    img2:String,
+    img3:String
 })
 
 const MeetingPoint=model('MeetingPoint',meetingPointSchema)
