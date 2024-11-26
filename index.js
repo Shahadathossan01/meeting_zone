@@ -42,7 +42,7 @@ app.delete('/bookingList/:id',bookingListDeleteController)
 
 app.get('/userBooking/:userId',userBookingController)
 
-app.post('/initiate-payment',async(req,res)=>{
+app.post('/initiate-payment',async(req,res,next)=>{
   const {username,meetupType,date,shift,members,duration,itemLocation,status,userId}=req.body
   let zoneId=null
   try{
@@ -54,7 +54,6 @@ app.post('/initiate-payment',async(req,res)=>{
   }catch(err){
     next(error)
 }
-console.log('zoneid',zoneId)
   const data = {
     total_amount: duration*1000,
     currency: 'BDT',
